@@ -1,0 +1,74 @@
+# -------------------------
+# Node / npm / pnpm
+# -------------------------
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+# -------------------------
+# Build outputs
+# -------------------------
+dist/
+release/
+out/
+build/*.bak
+
+# Electron-builder cache
+**/electron-builder/
+**/dist-electron/
+**/app/dist/
+**/app/node_modules/
+
+# Electron packaged outputs
+*.asar
+*.exe
+*.dll
+
+# -------------------------
+# Vite cache
+# -------------------------
+.vite/
+vite.config.timestamp-*
+.vite-build/
+
+# -------------------------
+# TypeScript / Vue
+# -------------------------
+*.tsbuildinfo
+*.log
+
+# Nuxt (혹시 생겨도 방지)
+.nuxt/
+.output/
+
+# -------------------------
+# OS / Editor
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# JetBrains
+.idea/
+
+# -------------------------
+# Env files
+# -------------------------
+.env
+.env.*
+!.env.example
+
+# -------------------------
+# Electron builder local caches
+# -------------------------
+C:/Users/*/AppData/Local/electron-builder/Cache/
+C:/Users/*/AppData/Local/Programs/
+
