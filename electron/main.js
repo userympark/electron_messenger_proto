@@ -6,10 +6,31 @@ import path from "node:path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const isDev = process.env.ELECTRON_DEV === "true";
+// Single Instance And Focus
+
+let mainWindow = null;
+
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  app.quit();
+  process.exit(0);
+}
+
+app.on("second-instance", () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+    mainWindow.show();
+  }
+});
+
+app.whenReady().then(() => {
+  createWindow();
+});
 
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 360,
     minWidth: 360,
 
@@ -25,22 +46,20 @@ function createWindow() {
     },
   });
 
-  win.removeMenu(); // 상단 app-menu 제거
+  mainWindow.removeMenu(); // 상단 app-menu 제거
+
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
+
+  const isDev = process.env.ELECTRON_DEV === "true";
 
   if (isDev) {
-    win.loadURL("http://localhost:5173");
+    mainWindow.loadURL("http://localhost:5173");
   } else {
-    win.loadFile(path.join(__dirname, "../dist/index.html"));
+    mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
 }
-
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
