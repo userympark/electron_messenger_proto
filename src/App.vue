@@ -204,7 +204,7 @@ const friends = ref<Friend[]>([
   {
     id: 1,
     name: "지수",
-    lastMessage: "오늘 저녁에 잠깐 통화 가능해?",
+    lastMessage: "저는 완벽한 AI봇입니다",
     time: "오후 1:12",
     unread: 2,
     isOnline: true,
@@ -212,8 +212,8 @@ const friends = ref<Friend[]>([
   },
   {
     id: 2,
-    name: "개발팀 단톡방",
-    lastMessage: "빌드 끝나면 배포만 하면 됩니다.",
+    name: "HTTP 단톡방",
+    lastMessage: "우리는 빙하기를 거치게 될거야..",
     time: "오전 11:03",
     unread: 5,
     isOnline: true,
@@ -221,8 +221,8 @@ const friends = ref<Friend[]>([
   },
   {
     id: 3,
-    name: "디자이너",
-    lastMessage: "새 메신저 UI 시안 드렸어요 🙌",
+    name: "호니",
+    lastMessage: "고구마 넘나 맛난 것",
     time: "어제",
     unread: 0,
     isOnline: false,
@@ -230,8 +230,8 @@ const friends = ref<Friend[]>([
   },
   {
     id: 4,
-    name: "서버 담당",
-    lastMessage: "로그 보니까 에러 하나 더 있어요.",
+    name: "포니",
+    lastMessage: "이놈들이 가장이 왔는데 나와보지도 않고",
     time: "어제",
     unread: 1,
     isOnline: false,
@@ -239,8 +239,8 @@ const friends = ref<Friend[]>([
   },
   {
     id: 5,
-    name: "테스터",
-    lastMessage: "모바일에서 스크롤 튀는 이슈 있어요.",
+    name: "뚜뚜",
+    lastMessage: "사료량을 늘려주시기 바랍니다",
     time: "2일 전",
     unread: 0,
     isOnline: false,
@@ -319,20 +319,34 @@ function handleRemoveFriend() {
   background: radial-gradient(circle at top, #1f2937, #020617);
 }
 
+/* 전체 컨테이너가 창 크기를 그대로 따라가도록 */
 .messenger-shell {
-  width: 320px;
-  height: 700px;
+  width: 100%;
+  height: 100vh; /* 화면 전체 높이 */
+  display: flex;
+  justify-content: center;
 }
 
+/* 항상 보여야 하므로 flex-shrink 방지 */
+.header-area {
+  flex-shrink: 0;
+}
+
+.footer-area {
+  flex-shrink: 0;
+}
+
+/* 메신저 카드가 화면을 꽉 채우도록 */
 .messenger-card {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 0 !important;
+  background: #ffffff;
 }
 
-/* v-list 쪽이 남은 공간을 채우도록 */
+/* 검색 + 리스트 + 하단 액션 구성 */
 .friend-list {
   flex: 1;
   overflow-y: auto;
@@ -341,10 +355,8 @@ function handleRemoveFriend() {
 
 /* 친구 아이템 스타일 */
 .friend-item {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
   padding-inline: 12px;
+  width: 100% !important;
 }
 
 .friend-item:hover {
@@ -362,13 +374,13 @@ function handleRemoveFriend() {
 
 /* 마지막 메시지 줄 생략 */
 .text-truncate {
-  max-width: 150px;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-/* 안 읽은 메시지 뱃지 */
 .unread-badge {
   min-width: 18px;
   padding: 0 6px;
@@ -384,7 +396,7 @@ function handleRemoveFriend() {
 .context-menu-overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999; /* 맨 위에 오도록 */
+  z-index: 9999;
 }
 
 .context-menu {
@@ -402,11 +414,9 @@ function handleRemoveFriend() {
   cursor: pointer;
   white-space: nowrap;
 }
-
 .context-menu-item:hover {
   background-color: #f3f4f6;
 }
-
 .context-menu-item.text-danger {
   color: #dc2626;
 }
