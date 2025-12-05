@@ -3,7 +3,7 @@
     <v-main class="bg-gradient d-flex align-center justify-center">
       <!-- 고정 크기 메신저 프레임 -->
       <div class="messenger-shell">
-        <v-card class="messenger-card" elevation="14" rounded="xl">
+        <v-card class="messenger-card">
           <!-- 상단 헤더 -->
           <v-card-title
             class="d-flex align-center justify-space-between py-3 px-4"
@@ -329,6 +329,7 @@ function handleRemoveFriend() {
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: 0 !important;
 }
 
 /* v-list 쪽이 남은 공간을 채우도록 */

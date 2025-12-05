@@ -8,7 +8,7 @@
     "dev:electron": "cross-env ELECTRON_DEV=true electron ./electron/main.js",
     "dev": "concurrently \"npm run dev:vite\" \"wait-on http://localhost:5173 && npm run dev:electron\"",
     "build": "vue-tsc -b && vite build",
-    "build:electron": "powershell -Command \"Remove-Item -Recurse -Force release\"; npm run build && electron-builder"
+    "build:electron": "npm run build && electron-builder"
   },
   "main": "electron/main.js",
   "build": {
