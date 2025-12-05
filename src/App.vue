@@ -159,6 +159,7 @@
         v-if="contextMenu.visible"
         class="context-menu-overlay"
         @click="closeContextMenu"
+        @contextmenu.prevent="reopenContextMenu"
       >
         <div
           class="context-menu"
@@ -279,14 +280,36 @@ const contextMenu = reactive<{
 
 function openContextMenu(event: MouseEvent, friend: Friend) {
   event.preventDefault();
+
   contextMenu.visible = false;
-  contextMenu.x = event.clientX;
-  contextMenu.y = event.clientY;
-  contextMenu.friend = friend;
-  // 다음 tick에서 열어주면 위치가 안정적
+
   requestAnimationFrame(() => {
+    const menuWidth = 160;
+    const menuHeight = 140;
+
+    let x = event.clientX;
+    let y = event.clientY;
+
+    if (x + menuWidth > window.innerWidth) {
+      x = window.innerWidth - menuWidth - 8;
+    }
+    if (y + menuHeight > window.innerHeight) {
+      y = window.innerHeight - menuHeight - 8;
+    }
+
+    contextMenu.x = x;
+    contextMenu.y = y;
+    contextMenu.friend = friend;
+
     contextMenu.visible = true;
   });
+}
+
+function reopenContextMenu(event: MouseEvent) {
+  if (!contextMenu.friend) return;
+  contextMenu.visible = false;
+
+  openContextMenu(event, contextMenu.friend);
 }
 
 function closeContextMenu() {
